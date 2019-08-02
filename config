@@ -1,0 +1,194 @@
+[colors]
+background = #353845
+background-alt = #333f52
+foreground = #ebf0f8
+foreground-alt = #969896
+primary = #e98bee
+secondary = #80dbc2
+alert = #53e59c
+calendar = #82c5ff
+battery = #82c5ff
+volume = #82c5ff
+cpu = #82c5ff
+ram = #82c5ff
+clock = #82c5ff
+logo = #ebf0f8
+
+[bar/top]
+monitor = ${env:MONITOR:HDMI-1}
+width = 80%
+height = 29
+offset-x = 10%
+offset-y = 0
+radius = 0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #f00
+
+border-size = 3
+border-color = #333f52
+
+padding-left = 1
+padding-right = 1 
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = Envy Code R:pixelsize=14;2
+font-2 = Siji:size=14;1
+
+modules-left = xmonad
+modules-center = date time
+modules-right = volume backlight eth wifi battery cpu memory
+
+tray-position = right
+tray-padding = 2
+
+[module/xmonad]
+type = custom/script
+exec = xmonad-log
+
+format-prefix = "xmonad "
+
+tail = true
+
+[module/wifi]
+type = internal/network
+interface = wlan0
+interval = 3.0
+
+label-disconnected = not connected
+format-connected = %essid% %signal% %downspeed:9%
+label-connected = ""
+label-connected-foreground = ${colors.foreground}
+label-connected-padding = 1
+
+[module/eth]
+type = internal/network
+interface = eno1
+interval = 3.0
+
+format-connected-prefix = "ETH "
+format-connected-prefix-foreground = ${colors.foreground}
+format-connected = <label-connected>
+label-connected = %downspeed:4% %upspeed:4%
+label-connected-foreground = ${colors.battery}
+label-connected-padding = 0
+
+[module/backlight]
+type = internal/xbacklight
+output = ${env:MONITOR:HDMI-1}
+
+; Create scroll handlers used to set the backlight value
+; Default: true
+enable-scroll = true
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+
+label-discharging-foreground = ${colors.battery}
+label-charging-foreground = ${colors.battery}
+label-charging-padding = 1
+label-discharging-padding = 1
+format-charging = <animation-charging><label-charging>
+
+format-discharging = <ramp-capacity><label-discharging>
+
+format-full-prefix = "  "
+format-full-prefix-foreground = ${colors.battery}
+ramp-capacity-0 = "  "
+ramp-capacity-1 = "  "
+ramp-capacity-2 = "  "
+
+animation-charging-0 = "  "
+animation-charging-1 = "  "
+animation-charging-2 = "  "
+animation-charging-foreground = ${colors.battery}
+animation-charging-framerate = 750
+
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "CPU "
+format-prefix-foreground = ${colors.cpu}
+label = %percentage%%
+
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "RAM "
+format-prefix-foreground = ${colors.ram}
+label = %percentage_used%%
+
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = "%d/%m-%Y"
+date-alt = "%a Week %V"
+
+time = %H:%M
+time-alt = %H:%M
+
+format-prefix = "DATE "
+format-prefix-foreground = ${colors.calendar}
+
+label = %date%
+format-prefix-backround = #fff
+
+
+[module/time]
+type = internal/date
+interval = 5
+
+time = %H:%M
+format-prefix = "TIME "
+format-prefix-foreground = ${colors.clock}
+label = %time%
+
+
+[module/volume]
+type = internal/pulseaudio
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted = muted
+label-muted-foreground = #666
+
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.primary}
+bar-volume-foreground-1 = ${colors.primary}
+bar-volume-foreground-2 = ${colors.primary}
+bar-volume-foreground-3 = ${colors.primary}
+bar-volume-foreground-4 = ${colors.primary}
+bar-volume-foreground-5 = ${colors.secondary}
+bar-volume-foreground-6 = ${colors.secondary}
+bar-volume-gradient = false
+bar-volume-indicator = ^
+bar-volume-indicator-font = 2
+bar-volume-fill = -
+bar-volume-fill-font = 2
+bar-volume-empty = -
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+
+[settings]
+screenchange-reload = true
+
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
